@@ -1,0 +1,6 @@
+[Interface]
+Address = {{object.ip_address}}/{{object.subnet}}
+ListenPort = {{ object.listen_port }}
+PrivateKey = {{ object.private_key }}
+PostUp = iptables -A FORWARD -i {{ object.wg_name }} -j ACCEPT;
+PostDown = iptables -D FORWARD -i {{ object.wg_name }} -j ACCEPT;

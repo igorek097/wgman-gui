@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container vh-100">
+    {% include 'components/main_navbar.html' %}
+    <main class="shadow-sm">
+        {% block content %}{% endblock content %}
+    </main>
+</div>
+    
+{% endblock body %}
+

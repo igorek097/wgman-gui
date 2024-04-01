@@ -1,0 +1,17 @@
+{
+  "dockerComposeFile": "compose.yml",
+  "service": "wgman",
+  "workspaceFolder": "/app",
+  "containerUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+				"ms-python.vscode-pylance",
+        "almahdi.code-django",
+        "batisteo.vscode-django",
+        "gruntfuggly.todo-tree"
+      ]
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+<div class="mb-3">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#baseModal"
+        hx-get="{% url 'wireguard:create-interface' %}"
+        hx-target="#baseModalBody">Add Network...</button>
+</div>
+<div style="overflow-y: auto; max-height:90%">
+    <table class="table fixed-header">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Subnet</th>
+                <th>Peers</th>
+                <th>Enabled</th>
+            </tr>
+        </thead>
+        {% if object_list.count %}
+        {% for obj in object_list %}
+            <tr>
+                <td class="fw-bold">
+                    <a href="" data-bs-toggle="modal" data-bs-target="#baseModal"
+                        hx-get="{% url 'wireguard:update-interface' obj.id %}"
+                        hx-target="#baseModalBody"
+                        title="{{ obj.description }}">{{ obj.name }}</a>
+                </td>
+                <td>{{ obj.ip_address }}/24</td>
+                <td>{{ obj.peers.count }}</td>
+                <td>
+                {% if obj.is_enabled %}
+                    <span class="bi-record-fill text-success"></span>
+                {% else %}
+                    <span class="bi-record-fill text-danger"></span>
+                {% endif %}
+                </td>
+            </tr>    
+        {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4" align="center"><span class="text-secondary">You have no configured networks</span></td>
+            </tr>
+        {% endif %}
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,6 @@
+[Peer]
+PublicKey = {{ object.interface.public_key }}
+PresharedKey = {{ object.preshared_key }}
+Endpoint = {{ object.interface.piblic_ip }}:{{ object.interface.listen_port }}
+AllowedIPs = {{ object.ip_address }}/24
+PersistentKeepalive = 25

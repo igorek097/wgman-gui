@@ -1,0 +1,18 @@
+<header class="shadow-sm">
+    <div class="navbar bg">
+        <div style="flex:1">
+            <ul class="nav nav-pills" style="flex:1">
+                <li class="nav-item">
+                    <a class="nav-link {% if section == 1 %} active {% endif %}" href="{% url 'dashboard:networks' %}">Networks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if section == 2 %} active {% endif %}" href="{% url 'dashboard:peers' %}">Peers</a>
+                </li>
+            </ul>
+        </div>
+        <div style="font-size: 1.5rem;">
+            <a href="" class="bi-gear me-2 text-dark" title="Settings"></a>
+            <a href="{% url 'users:logout' %}" class="bi-box-arrow-right text-dark" title="Logout"></a>
+        </div>
+    </div>
+</header>

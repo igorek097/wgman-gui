@@ -1,0 +1,5 @@
+<form action="{{ form_action }}" method="{{ form_method|default:"POST" }}">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-{{ form_button_type|default:'primary' }} mt-2">{{ form_button|default:"OK" }}</button>
+</form>

@@ -1,0 +1,10 @@
+<form 
+    {% if form_method == 'GET' %} 
+        hx-get="{{ form_action }}"
+    {% else %}
+        hx-post="{{ form_action }}"
+    {% endif %}>
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-primary mt-2">{{ form_button|default:"OK" }}</button>
+</form>

@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  wgman:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/app
+      - ../data/wg:/etc/wireguard
+    cap_add:
+      - NET_ADMIN
+    command: bash /app/start.sh
+    network_mode: host
+    env_file:
+      - .env

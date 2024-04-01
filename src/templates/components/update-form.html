@@ -1,0 +1,12 @@
+<form action="{{ form_action }}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <div class="d-flex">
+        <div style="flex:1">
+            <button type="submit" class="btn btn-primary mt-2">Save</button>
+        </div>
+        <div>
+            <a hx-get="{{ delete_action }}" hx-swap="outerHTML" class="btn btn-secondary mt-2">Delete</a>
+        </div>
+    </div>
+</form>

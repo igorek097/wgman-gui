@@ -1,0 +1,32 @@
+:root {
+    --background-color: #f2f7ff
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+ul.errorlist li {
+    font-weight: 400;
+    color: var(--bs-danger);
+}
+
+main {
+    height: 80vh;
+    max-height: 80vh;
+}
+
+main, header {
+    background-color: white;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+table.fixed-header th {
+    position: sticky !important;
+    top: 0;
+    z-index: 2;
+    background-color: antiquewhite;
+    border-bottom: none;
+}
+

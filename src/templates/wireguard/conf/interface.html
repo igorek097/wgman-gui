@@ -1,0 +1,15 @@
+[Interface]
+Address = {{object.ip_address}}/24
+ListenPort = {{ object.listen_port }}
+PrivateKey = {{ object.private_key }}
+
+{% for peer in object.peers.all %}
+{% if peer.is_enabled %}
+[Peer]
+PublicKey = {{ peer.public_key }}
+PresharedKey = {{ peer.preshared_key }}
+AllowedIPs = {{ peer.ip_address }}/32
+PersistentKeepalive = 25
+
+{% endif %}
+{% endfor %}

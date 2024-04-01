@@ -1,0 +1,16 @@
+#!/sbin/openrc-run
+
+description="WGMan {{ object.wg_name }}"
+
+depend() {
+    need localmount
+    need net
+}
+
+start() {
+    wg-quick up {{ object.wg_name }}
+}
+
+stop() {
+    wg-quick down {{ object.wg_name }}
+}
