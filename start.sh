@@ -1,2 +1,2 @@
 #!/bin/bash
-python /app/src/manage.py initwgm && sleep infinity
+python /app/src/manage.py initwgm && python /app/src/manage.py runserver
