@@ -1,0 +1,5 @@
+.devcontainer
+data
+.vscode
+.git
+.gitignore
