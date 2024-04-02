@@ -12,5 +12,5 @@ services:
     command: bash /app/start.sh
     network_mode: host
     environment:
-      - PUBLIC_IP=192.168.178.58 #Optional
+      - PUBLIC_IP=192.168.178.68 #Optional
       # - IP_PREFIX=10.22 #Optional
