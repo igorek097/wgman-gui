@@ -6,10 +6,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../:/app
-      - ../data/wg:/etc/wireguard
+      # - ../data/wg:/etc/wireguard
     cap_add:
       - NET_ADMIN
     command: bash /app/start.sh
     network_mode: host
-    env_file:
-      - .env
+    environment:
+      - PUBLIC_IP=192.168.178.58 #Optional
+      # - IP_PREFIX=10.22 #Optional
