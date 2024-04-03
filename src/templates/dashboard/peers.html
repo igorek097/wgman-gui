@@ -21,8 +21,8 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Network</th>
                 <th>IP Address</th>
+                <th>Network</th>
                 <th>Enabled</th>
                 <th>Config</th>
             </tr>
@@ -36,8 +36,8 @@
                         hx-target="#baseModalBody"
                         title="{{ obj.description }}">{{ obj.name }}</a>
                 </td>
-                <td>{{ obj.interface }}</td>
                 <td>{{ obj.ip_address }}</td>
+                <td>{{ obj.interface }}</td>
                 <td>
                 {% if obj.is_enabled %}
                     <span class="bi-record-fill text-success"></span>

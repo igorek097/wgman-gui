@@ -1,9 +1,11 @@
-from typing import Any
+from os import remove
+
 from django.db import models
 from django.template.loader import render_to_string
 
 from core.models import Setting
 from core.tools import write_to_file
+from wireguard.core import service
 
 
 class Interface(models.Model):
@@ -44,8 +46,27 @@ class Interface(models.Model):
         return render_to_string('wireguard/conf/interface.html', {'object':self})
     
     def save_conf(self):
-        conf_path = f'/etc/wireguard/{self.wg_name}.conf'
-        write_to_file(conf_path, self.flush())
+        write_to_file(self.get_conf_filename(), self.flush())
+        
+    def delete_conf(self):
+        remove(self.get_conf_filename())
+        
+    def up(self):
+        service.up(self.wg_name)
+        
+    def down(self):
+        service.down(self.wg_name)
+        
+    def sync(self):
+        service.syncconf(self.wg_name)
+        
+    @property
+    def is_active(self):
+        return service.is_active(self.wg_name)
+    
+    def get_conf_filename(self):
+        return f'/etc/wireguard/{self.wg_name}.conf'
+        
         
 
 class Peer(models.Model):
