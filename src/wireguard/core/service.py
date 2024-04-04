@@ -29,3 +29,15 @@ def is_active(interface_name:str):
     lookup_str = f'interface: {interface_name}'
     wg_status = run(['wg'], stdout=PIPE).stdout.decode()
     return lookup_str in wg_status
+
+def peer_last_seen(peer_ip):
+    wg_status = run(['wg'], stdout=PIPE).stdout.decode()
+    status = [s.strip() for s in wg_status.split('\n')]
+    search_str = f'allowed ips: {peer_ip}/32'
+    try:
+        idx = status.index(search_str)
+    except:
+        return None
+    if 'latest handshake' in status[idx+1]:
+        return status[idx+1]
+    return None

@@ -24,6 +24,7 @@
                 <th>IP Address</th>
                 <th>Network</th>
                 <th>Enabled</th>
+                <th>Last seen</th>
                 <th>Config</th>
             </tr>
         </thead>
@@ -44,6 +45,10 @@
                 {% else %}
                     <span class="bi-record-fill text-danger"></span>
                 {% endif %}
+                </td>
+
+                <td>
+                {% if obj.is_enabled %}{{ obj.last_seen }}{% endif %}
                 </td>
                     
                 <td style="width:1%">

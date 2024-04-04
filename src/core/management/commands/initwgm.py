@@ -21,8 +21,7 @@ class Command(BaseCommand):
             Setting(name='ip_prefix', value=self.get_ip_prefix()).save()
             return
         for net in Interface.objects.filter(is_enabled=True):
-            net.save_conf()
-            service.up(net.wg_name)
+            net.up()
             
     def get_public_ip(self):
         public_ip = getenv('PUBLIC_IP')
