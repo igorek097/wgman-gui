@@ -1,5 +1,6 @@
 from os import system, remove
 from subprocess import run, PIPE
+from re import sub
 
 
 def syncconf(interface_name:str):
@@ -40,6 +41,8 @@ def peer_last_seen(peer_ip):
         return None
     if 'latest handshake' in status[idx+1]:
         timestr = status[idx+1].replace('latest handshake: ', '')
-        timestr = timestr.replace(' minutes, ', 'm').replace(' seconds ago', 's')
+        timestr = sub(r'minutes|minute', 'm', timestr)
+        timestr = sub(r'seconds|second', 's', timestr)
+        timestr = timestr.replace(' ', '').replace(',', '')
         return timestr
     return None
