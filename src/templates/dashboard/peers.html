@@ -48,7 +48,7 @@
                 </td>
 
                 <td>
-                {% if obj.is_enabled %}{{ obj.last_seen }}{% endif %}
+                {% if obj.is_enabled %}{{ obj.last_seen|default:'N/A' }}{% endif %}
                 </td>
                     
                 <td style="width:1%">
