@@ -18,7 +18,7 @@ class Interface(models.Model):
     private_key = models.CharField(max_length=255)
     public_key = models.CharField(max_length=255)
     is_enabled = models.BooleanField(default=True)
-    # dns = models.CharField(max_length=15, blank=True, null=True)
+    dns = models.CharField(max_length=15, blank=True, null=True)
     
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)

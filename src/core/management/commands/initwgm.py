@@ -15,8 +15,8 @@ class Command(BaseCommand):
     help = 'Initialize Application on container start'
     
     def handle(self, *args, **options):
+        system(f'python {settings.BASE_DIR}/manage.py migrate')
         if not exists(settings.DB_PATH):
-            system(f'python {settings.BASE_DIR}/manage.py migrate')
             Setting(name='public_ip', value=self.get_public_ip()).save()
             Setting(name='ip_prefix', value=self.get_ip_prefix()).save()
             return

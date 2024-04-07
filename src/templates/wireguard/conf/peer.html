@@ -1,6 +1,9 @@
 [Interface]
 PrivateKey = {{ object.private_key }}
 Address = {{ object.ip_address }}/32
+{% if object.interface.dns %}
+DNS = {{ object.interface.dns }}    
+{% endif %}
 
 [Peer]
 PublicKey = {{ object.interface.public_key }}

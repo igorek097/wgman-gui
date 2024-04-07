@@ -7,16 +7,17 @@ class InterfaceForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = models.Interface
-        fields = ['name', 'description', 'is_enabled']
+        fields = ['name', 'dns', 'description', 'is_enabled']
         
         labels = {
             'name': 'Network name',
+            'dns': 'DNS (optional)',
             'is_enabled': 'Enable Network?'
         }
         
         widgets = {
             'description': forms.Textarea(attrs={'rows':3}),
-            'is_enabled': forms.CheckboxInput()
+            'is_enabled': forms.CheckboxInput(),
         }
         
         
