@@ -54,7 +54,10 @@
                 <td style="width:1%">
                     <div class="d-flex">
                         <a href="{% url 'wireguard:download-peer-config' obj.id %}" class="btn btn-outline-secongary bi-download" title="Download"></a>
-                        <a class="btn btn-outline-secongary bi-qr-code-scan" title="Show QR"></a>
+                        <a class="btn btn-outline-secongary bi-qr-code-scan" title="Show QR" 
+                            data-bs-toggle="modal" data-bs-target="#baseModal"
+                            hx-get="{% url 'wireguard:qr-peer-config' obj.id %}"
+                            hx-target="#baseModalBody"></a>
                         <a class="btn btn-outline-secongary bi-display" title="Display"></a>
                     </div>
                 </td>

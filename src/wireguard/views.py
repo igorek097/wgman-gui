@@ -1,3 +1,7 @@
+import qrcode
+from io import BytesIO
+from base64 import b64encode
+
 from django.forms import BaseModelForm
 from django.http import HttpRequest, HttpResponse
 from django.views import generic
@@ -168,3 +172,16 @@ class DownloadPeerConfigView(RestrictedMixin, generic.View):
         response = HttpResponse(peer.flush(), content_type="application/text")
         response['Content-Disposition'] = f'inline; filename={filename}'
         return response
+    
+    
+class QrPeerConfigView(RestrictedMixin, generic.View):
+    
+    def get(self, *args, **kwargs):
+        peer = models.Peer.objects.get(pk=kwargs['pk'])
+        img = qrcode.make(peer.flush(), box_size=6)
+        stream = BytesIO()
+        img.save(stream, 'png')
+        image_data = b64encode(stream.getvalue()).decode('utf-8')
+        response = f'<img src="data:image/png;base64,{image_data}">'
+        return HttpResponse(response)
+        
