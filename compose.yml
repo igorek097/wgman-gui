@@ -25,6 +25,8 @@ services:
       - wgman
     restart: unless-stopped
     network_mode: host
+    volumes:
+      - static:/var/www/static
 
 volumes:
   static:
