@@ -6,7 +6,7 @@ services:
       dockerfile: app
     volumes:
       - ./data/db:/app/data/db
-      - static:/app/src/app/static
+      - static:/app/src/static
     cap_add:
       - NET_ADMIN
     command: bash /app/start.sh
