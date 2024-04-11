@@ -22,3 +22,6 @@ services:
     depends_on:
       - wgman
     restart: unless-stopped
+
+volumes:
+  static:
