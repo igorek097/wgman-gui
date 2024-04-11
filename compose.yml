@@ -1,32 +1,31 @@
 version: "3"
 services:
+
+  proxy:
+      build:
+        context: .
+        dockerfile: proxy
+      depends_on:
+        - wgman
+      restart: unless-stopped
+      network_mode: host
+      volumes:
+        - ./static:/var/www/static
+  
   wgman:
     build:
       context: .
       dockerfile: app
     volumes:
       - ./data/db:/app/data/db
-      - static:/app/src/static
+      - ./static:/app/src/static
     cap_add:
       - NET_ADMIN
     command: bash /app/start.sh
     network_mode: host
     environment:
-      - PRODUCTION=true
+      - PRODUCTION=0
     #   - PUBLIC_IP=192.168.178.68 
     #   - IP_PREFIX=10.22 #Optional
     restart: unless-stopped
-  
-  proxy:
-    build:
-      context: .
-      dockerfile: proxy
-    depends_on:
-      - wgman
-    restart: unless-stopped
-    network_mode: host
-    volumes:
-      - static:/var/www/static
-
-volumes:
-  static:
+    
