@@ -1,7 +1,9 @@
 version: "3"
 services:
   wgman:
-    build: ./app
+    build:
+      context: .
+      dockerfile: app
     volumes:
       - ./data/db:/app/data/db
       - static:/app/src/app/static
@@ -16,7 +18,9 @@ services:
     restart: unless-stopped
   
   proxy:
-    build: ./proxy
+    build:
+      context: .
+      dockerfile: proxy
     ports:
       - 8080:80
     depends_on:
