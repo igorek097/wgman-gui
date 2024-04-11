@@ -1,2 +1,2 @@
 #!/bin/bash
-python /app/src/manage.py initwgm && python /app/src/manage.py runserver 0.0.0.0:8088
+python /app/src/manage.py initwgm && python gunicorn gunicorn --chdir /app/src app.wsgi --bind 127.0.0.1:8888

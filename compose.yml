@@ -1,17 +1,24 @@
-version: "3.8"
+version: "3"
 services:
   wgman:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: ./app
     volumes:
       - ./data/db:/app/data/db
+      - static:/app/src/app/static
     cap_add:
       - NET_ADMIN
     command: bash /app/start.sh
     network_mode: host
-    
-    # Optional
-    # environment:
+    environment:
+      - PRODUCTION=true
     #   - PUBLIC_IP=192.168.178.68 
     #   - IP_PREFIX=10.22 #Optional
+    restart: unless-stopped
+  
+  proxy:
+    build: ./proxy
+    ports:
+      - 8080:80
+    depends_on:
+      - wgman
+    restart: unless-stopped
