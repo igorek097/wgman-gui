@@ -23,7 +23,7 @@ services:
     command: bash /app/start.sh
     network_mode: host
     environment:
-      - PRODUCTION=1
+      - PRODUCTION=0
     #   - PUBLIC_IP=192.168.178.68 
     #   - IP_PREFIX=10.22 #Optional
     restart: unless-stopped
