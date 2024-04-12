@@ -9,15 +9,14 @@ services:
       restart: unless-stopped
       network_mode: host
       volumes:
-        - ./data/static:/var/www/static
+        - ./data/staticfiles:/var/www/static
   
   wgman:
     build:
       context: .
       dockerfile: app
     volumes:
-      - ./data/db:/app/data/db
-      - ./data/static:/app/staticfiles
+      - ./data:/app/data
     cap_add:
       - NET_ADMIN
     command: bash /app/start.sh
