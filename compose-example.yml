@@ -1,0 +1,30 @@
+services:
+
+  proxy:
+      build:
+        context: .
+        dockerfile: proxy
+      depends_on:
+        - wgman
+      restart: unless-stopped
+      network_mode: host
+      volumes:
+        - ./data/staticfiles:/var/www/static
+  
+  wgman:
+    build:
+      context: .
+      dockerfile: app
+    volumes:
+      - ./data:/app/data
+    cap_add:
+      - NET_ADMIN
+    command: bash /app/start.sh
+    network_mode: host
+    environment:
+      - PRODUCTION=true
+      - HOST=myvpn.domain.com
+      - DJANGO_SECRET_KEY=django-insecure-k4&)i^j1vmdpx-uu97en%ddd4%v$r180+&jjiwe64em+60=9hm
+    #   - PUBLIC_IP=192.168.178.68 
+    #   - IP_PREFIX=10.22 #Optional
+    restart: unless-stopped

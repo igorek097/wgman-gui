@@ -22,17 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k4&)i^j1vmdpx-uu97en%ddd4%v$r180+&jjiwe64em+60=9hm'
+SECRET_KEY = getenv('DJANGO_SECRET_KEY', 'django-insecure-k4&)i^j1vmdpx-uu97en%ddd4%v$r180+&jjiwe64em+60=9hm')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv('PRODUCTION', default=True) == 'false'
 
 if DEBUG:
     ALLOWED_HOSTS = ['*']
-    CSRF_TRUSTED_ORIGINS = ['http://45.95.235.118', 'http://127.0.0.1']
+    CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['vpn.apps.home']
-    CSRF_TRUSTED_ORIGINS = ['http://vpn.apps.home']
+    ALLOWED_HOSTS = [f'{getenv('HOST')}']
+    CSRF_TRUSTED_ORIGINS = [f'http://{getenv('HOST')}']
 
 # Application definition
 
