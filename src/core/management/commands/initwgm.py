@@ -1,5 +1,5 @@
 from os.path import exists
-from os import system, getenv
+from os import system, getenv, path
 from subprocess import run, PIPE
 
 from django.core.management.base import BaseCommand
@@ -15,6 +15,9 @@ class Command(BaseCommand):
     help = 'Initialize Application on container start'
     
     def handle(self, *args, **options):
+        db_dir = path.dirname(settings.DB_PATH)
+        if not exists(db_dir):
+            system(f'mkdir {db_dir}')
         system(f'python {settings.BASE_DIR}/manage.py migrate')
         if not exists(settings.DB_PATH):
             Setting(name='public_ip', value=self.get_public_ip()).save()
