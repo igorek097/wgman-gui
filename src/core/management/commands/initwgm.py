@@ -1,4 +1,3 @@
-from os.path import exists
 from os import system, getenv, path
 from subprocess import run, PIPE
 
@@ -7,7 +6,6 @@ from django.conf import settings
 
 from core.models import Setting
 from wireguard.models import Interface
-from wireguard.core import service
 
 
 class Command(BaseCommand):
@@ -15,17 +13,21 @@ class Command(BaseCommand):
     help = 'Initialize Application on container start'
     
     def handle(self, *args, **options):
-        db_dir = path.dirname(settings.DB_PATH)
-        if not exists(db_dir):
-            system(f'mkdir {db_dir}')
-        system(f'python {settings.BASE_DIR}/manage.py migrate')
-        if not exists(settings.DB_PATH):
+        if not path.exists(settings.DB_PATH):
+            db_dir = path.dirname(settings.DB_PATH)
+            if not path.exists(db_dir):
+                system(f'mkdir {db_dir}')
+            self.migrate()
             Setting(name='public_ip', value=self.get_public_ip()).save()
             Setting(name='ip_prefix', value=self.get_ip_prefix()).save()
             return
+        self.migrate()
         for net in Interface.objects.filter(is_enabled=True):
             net.up()
             
+    def migrate(self):
+        system(f'python {settings.BASE_DIR}/manage.py migrate')
+    
     def get_public_ip(self):
         public_ip = getenv('PUBLIC_IP')
         if not public_ip:
