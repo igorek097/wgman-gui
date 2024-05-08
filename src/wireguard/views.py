@@ -184,4 +184,13 @@ class QrPeerConfigView(RestrictedMixin, generic.View):
         image_data = b64encode(stream.getvalue()).decode('utf-8')
         response = f'<img src="data:image/png;base64,{image_data}">'
         return HttpResponse(response)
+    
+    
+class ShowPeerConfigView(RestrictedMixin, generic.View):
+    
+    def get(self, *args, **kwargs):
+        peer = models.Peer.objects.get(pk=kwargs['pk'])
+        response = HttpResponse(peer.flush(), content_type="application/text")
+        # response['Content-Disposition'] = f'inline; filename={filename}'
+        return response
         

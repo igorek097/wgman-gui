@@ -41,6 +41,8 @@ def peer_last_seen(peer_ip):
         return None
     if 'latest handshake' in status[idx+1]:
         timestr = status[idx+1].replace('latest handshake: ', '')
+        timestr = sub(r'days|day', 'd', timestr)
+        timestr = sub(r'hours|hour', 'h', timestr)
         timestr = sub(r'minutes|minute', 'm', timestr)
         timestr = sub(r'seconds|second', 's', timestr)
         timestr = timestr.replace(' ', '').replace(',', '').replace('ago', '')
