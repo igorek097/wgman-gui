@@ -5,7 +5,6 @@ from core.views import RestrictedMixin
 from wireguard.models import Interface, Peer
 
 
-
 class NetworksView(RestrictedMixin, generic.ListView):
     
     template_name = 'dashboard/networks.html'

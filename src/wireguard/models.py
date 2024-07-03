@@ -91,7 +91,6 @@ class Interface(models.Model):
             f'iptables -I FORWARD -s {self.netmask} -j ACCEPT',
         ]
         
-        
 
 class Peer(models.Model):
     

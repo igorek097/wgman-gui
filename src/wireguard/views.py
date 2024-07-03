@@ -186,11 +186,15 @@ class QrPeerConfigView(RestrictedMixin, generic.View):
         return HttpResponse(response)
     
     
-class ShowPeerConfigView(RestrictedMixin, generic.View):
+class ShowPeerConfigView(RestrictedMixin, generic.DetailView):
     
-    def get(self, *args, **kwargs):
-        peer = models.Peer.objects.get(pk=kwargs['pk'])
-        response = HttpResponse(peer.flush(), content_type="application/text")
-        # response['Content-Disposition'] = f'inline; filename={filename}'
-        return response
+    template_name = 'wireguard/conf/peer_format.html'
+    model = models.Peer
+    
+    # def get(self, *args, **kwargs):
+    #     peer = models.Peer.objects.get(pk=kwargs['pk'])
+    #     response = HttpResponse(peer.flush(), content_type="application/text")
+    #     # response['Content-Disposition'] = f'inline; filename={filename}'
+    #     return response
+        
         

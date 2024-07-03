@@ -3,3 +3,4 @@ data
 .vscode
 .git
 .gitignore
+build
