@@ -1,10 +1,13 @@
 [Interface]
 PrivateKey = {{ object.private_key }}
 Address = {{ object.ip_address }}/32
+{% if object.interface.dns %}
+DNS = {{ object.interface.dns }}    
+{% endif %}
 
 [Peer]
 PublicKey = {{ object.interface.public_key }}
 PresharedKey = {{ object.preshared_key }}
 Endpoint = {{ object.interface.public_ip }}:{{ object.interface.listen_port }}
-AllowedIPs = {{ object.interface.ip_prefix }}.0/24
+AllowedIPs = {{ object.interface.netmask }}
 PersistentKeepalive = 25

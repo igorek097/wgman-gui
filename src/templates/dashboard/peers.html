@@ -24,6 +24,7 @@
                 <th>IP Address</th>
                 <th>Network</th>
                 <th>Enabled</th>
+                <th>Last seen</th>
                 <th>Config</th>
             </tr>
         </thead>
@@ -45,12 +46,22 @@
                     <span class="bi-record-fill text-danger"></span>
                 {% endif %}
                 </td>
+
+                <td>
+                {% if obj.is_enabled %}{{ obj.last_seen|default:'-' }}{% endif %}
+                </td>
                     
                 <td style="width:1%">
                     <div class="d-flex">
                         <a href="{% url 'wireguard:download-peer-config' obj.id %}" class="btn btn-outline-secongary bi-download" title="Download"></a>
-                        <a class="btn btn-outline-secongary bi-qr-code-scan" title="Show QR"></a>
-                        <a class="btn btn-outline-secongary bi-display" title="Display"></a>
+                        <a class="btn btn-outline-secongary bi-qr-code-scan" title="Show QR" 
+                            data-bs-toggle="modal" data-bs-target="#baseModal"
+                            hx-get="{% url 'wireguard:qr-peer-config' obj.id %}"
+                            hx-target="#baseModalBody"></a>
+                        <a class="btn btn-outline-secongary bi-display" title="Display"
+                            data-bs-toggle="modal" data-bs-target="#largeModal"
+                            hx-get="{% url 'wireguard:show-peer-config' obj.id %}"
+                            hx-target="#largeModalBody"></a>
                     </div>
                 </td>
             </tr>    

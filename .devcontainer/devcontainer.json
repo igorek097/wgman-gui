@@ -7,6 +7,7 @@
     "vscode": {
       "extensions": [
         "ms-python.python",
+        "ms-python.pylint",
 				"ms-python.vscode-pylance",
         "almahdi.code-django",
         "batisteo.vscode-django",

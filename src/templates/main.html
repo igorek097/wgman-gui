@@ -14,6 +14,7 @@
 <body>
     {% block body %}{% endblock body %}
     {% include 'components/modal.html' with modal_id='baseModal' %}
+    {% include 'components/modal.html' with size='modal-lg' modal_id='largeModal' %}
     <script src="{% static 'js/bs.js' %}"></script>
     <script src="{% static 'js/htmx.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>

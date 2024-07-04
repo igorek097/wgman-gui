@@ -11,6 +11,10 @@ ul.errorlist li {
     color: var(--bs-danger);
 }
 
+body {
+    max-height: 100vh;
+}
+
 main {
     height: 80vh;
     max-height: 80vh;

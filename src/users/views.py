@@ -24,17 +24,16 @@ class SignupView(CreateView):
 class LoginView(auth_views.LoginView):
     
     success_url = reverse_lazy('dashboard:networks')
-    
     model = get_user_model()
     form_class = forms.LoginForm
     fields = ['username', 'password']
     template_name = 'users/login.html'
+    redirect_authenticated_user = True
     
     def get(self, request, *args, **kwargs) -> HttpResponse:
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('core:main'))
         return super().get(request, *args, **kwargs)
-
     
     def get_success_url(self) -> str:
         return self.success_url

@@ -1,4 +1,5 @@
-from os import remove
+from os import remove, system
+from re import sub
 
 from django.db import models
 from django.template.loader import render_to_string
@@ -17,6 +18,7 @@ class Interface(models.Model):
     private_key = models.CharField(max_length=255)
     public_key = models.CharField(max_length=255)
     is_enabled = models.BooleanField(default=True)
+    dns = models.CharField(max_length=15, blank=True, null=True)
     
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -33,6 +35,10 @@ class Interface(models.Model):
     def ip_prefix(self):
         ip_prefix = Setting.objects.get(name='ip_prefix').value
         return f'{ip_prefix}.{self.subnet_num}'
+    
+    @property
+    def netmask(self):
+        return f'{self.ip_prefix}.0/24'
     
     @property
     def wg_name(self):
@@ -52,12 +58,17 @@ class Interface(models.Model):
         remove(self.get_conf_filename())
         
     def up(self):
+        self.iptables('up')
+        self.save_conf()
         service.up(self.wg_name)
         
     def down(self):
         service.down(self.wg_name)
+        self.iptables('down')
+        self.delete_conf()
         
     def sync(self):
+        self.save_conf()
         service.syncconf(self.wg_name)
         
     @property
@@ -66,7 +77,19 @@ class Interface(models.Model):
     
     def get_conf_filename(self):
         return f'/etc/wireguard/{self.wg_name}.conf'
-        
+
+    def iptables(self, action:str):
+        if not action in ['up', 'down']:
+            action = 'down'
+        for rule in self.get_ip_rules():
+            if action == 'down':
+                rule = sub(r'-A|-I', '-D', rule)
+            system(rule)
+            
+    def get_ip_rules(self):
+        return [
+            f'iptables -I FORWARD -s {self.netmask} -j ACCEPT',
+        ]
         
 
 class Peer(models.Model):
@@ -92,5 +115,9 @@ class Peer(models.Model):
         ip_prefix = self.interface.ip_prefix
         return f'{ip_prefix}.{self.ip_num}'
     
+    @property
+    def last_seen(self):
+        return service.peer_last_seen(self.ip_address)
+
     def flush(self):
         return render_to_string('wireguard/conf/peer.html', {'object': self})

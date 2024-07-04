@@ -14,4 +14,6 @@ urlpatterns = [
     path('update-peer/<pk>', views.UpdatePeerView.as_view(), name='update-peer'),
     path('delete-peer/<pk>', views.DeletePeerView.as_view(), name='delete-peer'),
     path('download-peer-config/<pk>', views.DownloadPeerConfigView.as_view(), name='download-peer-config'),
+    path(f'show-peer-config/<pk>', views.ShowPeerConfigView.as_view(), name='show-peer-config'),
+    path(f'qr-peer-config/<pk>', views.QrPeerConfigView.as_view(), name='qr-peer-config'),
 ]

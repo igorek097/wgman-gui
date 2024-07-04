@@ -1,0 +1,15 @@
+<html>
+    [Interface]<br>
+    PrivateKey = {{ object.private_key }}<br>
+    Address = {{ object.ip_address }}/32<br>
+    {% if object.interface.dns %}
+    DNS = {{ object.interface.dns }}<br>
+    {% endif %}
+    <br>
+    [Peer]<br>
+    PublicKey = {{ object.interface.public_key }}<br>
+    PresharedKey = {{ object.preshared_key }}<br>
+    Endpoint = {{ object.interface.public_ip }}:{{ object.interface.listen_port }}<br>
+    AllowedIPs = {{ object.interface.netmask }}<br>
+    PersistentKeepalive = 25<br>
+</html>

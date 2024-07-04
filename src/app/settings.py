@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from os.path import dirname, join
+from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k4&)i^j1vmdpx-uu97en%ddd4%v$r180+&jjiwe64em+60=9hm'
+SECRET_KEY = getenv('DJANGO_SECRET_KEY', 'django-insecure-k4&)i^j1vmdpx-uu97en%ddd4%v$r180+&jjiwe64em+60=9hm')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv('PRODUCTION', default='false') == 'false'
 
-ALLOWED_HOSTS = ['*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+    CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1']
+else:
+    ALLOWED_HOSTS = [f'{getenv('HOST')}']
+    CSRF_TRUSTED_ORIGINS = [f'http://{getenv('HOST')}']
 
 # Application definition
 
@@ -123,7 +129,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-# STATIC_ROOT = join(BASE_DIR, 'static')
+STATIC_ROOT = join(BASE_DIR.parent, 'data/staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
